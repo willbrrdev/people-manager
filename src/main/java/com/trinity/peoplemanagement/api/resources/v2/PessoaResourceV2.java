@@ -1,4 +1,4 @@
-package com.trinity.peoplemanagement.api.resources;
+package com.trinity.peoplemanagement.api.resources.v2;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +27,15 @@ import com.trinity.peoplemanagement.domain.exception.EntidadeNaoEncontradaExcept
 import com.trinity.peoplemanagement.domain.model.Pessoa;
 import com.trinity.peoplemanagement.domain.repository.PessoaRepository;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Pessoas - v2", tags = "Pessoas - v2")
 @RestController
-@RequestMapping("api/v1/pessoas")
-public class PessoaResource {
+@RequestMapping("api/v2/pessoas")
+public class PessoaResourceV2 {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;

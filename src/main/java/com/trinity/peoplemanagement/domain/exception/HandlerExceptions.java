@@ -14,8 +14,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.undefined.hemoapp.api.domain.exception.ErrorItem;
-
 @ControllerAdvice
 public class HandlerExceptions {
 
