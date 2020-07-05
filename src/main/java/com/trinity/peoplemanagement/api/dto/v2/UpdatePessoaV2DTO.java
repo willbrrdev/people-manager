@@ -1,9 +1,14 @@
-package com.trinity.peoplemanagement.api.dto.v1;
+package com.trinity.peoplemanagement.api.dto.v2;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.trinity.peoplemanagement.domain.model.Endereco;
 import com.trinity.peoplemanagement.domain.model.Pessoa;
 
 import io.swagger.annotations.ApiModel;
@@ -12,18 +17,18 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel("ResponsePessoaDTO")
+@ApiModel("UpdatePessoaV2DTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ResponsePessoaDTO {
-
-	@ApiModelProperty(value = "Id da pessoa", example = "1")
-	private Long id;
+public class UpdatePessoaV2DTO {
 
 	@ApiModelProperty(value = "Nome da pessoa", example = "Marcone", required = true)
+	@NotNull(message = "O Nome não pode ser Nulo")
+	@NotEmpty(message = "O Nome não pode ser vazio ")
 	private String nome;
 
 	@ApiModelProperty(value = "Email da pessoa", example = "marcone@mail.com")
+	@Email(message = "Formato de email inválido")
 	private String email;
 
 	@ApiModelProperty(value = "Data de anivesário da pessoa", example = "1994-05-11", required = true)
@@ -36,25 +41,23 @@ public class ResponsePessoaDTO {
 	@ApiModelProperty(value = "Nacionalidade da pessoa", example = "Brasileiro")
 	private String nacionalidade;
 
-	@ApiModelProperty(value = "CPF da pessoa - Deve ser um cpf válido e não pode ser igual a um já cadastrado", example = "marcone@mail.com", required = true)
-	private String cpf;
-
 	@ApiModelProperty(value = "Sexo da pessoa, Masculino, Feminino e Outros", example = "Masculino")
 	private String sexo;
 	
-	public ResponsePessoaDTO(Pessoa pessoa) {
-		this.init(pessoa);
-	}
-	
-	private void init(Pessoa pessoa) {
-		this.id = pessoa.getId();
-		this.cpf = pessoa.getCpf();
-		this.dataNascimento = pessoa.getDataNascimento();
-		this.email = pessoa.getEmail();
-		this.nacionalidade = pessoa.getNacionalidade();
-		this.naturalidade = pessoa.getNaturalidade();
-		this.nome = pessoa.getNome();
-		this.sexo = pessoa.getSexo();
+	@ApiModelProperty(value = "Objeto contendo informações de endereço de uma pessoa")
+	@NotNull(message = "O objeto endereço de ser informado")
+	private Endereco endereco;
+
+	public Pessoa toPessoa() {
+		Pessoa pessoa = new Pessoa();
+		pessoa.setDataNascimento(this.dataNascimento);
+		pessoa.setEmail(this.email);
+		pessoa.setNacionalidade(this.nacionalidade);
+		pessoa.setNaturalidade(this.naturalidade);
+		pessoa.setNome(this.nome);
+		pessoa.setSexo(this.sexo);
+
+		return pessoa;
 	}
 
 }

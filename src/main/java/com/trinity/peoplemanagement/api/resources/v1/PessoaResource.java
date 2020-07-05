@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trinity.peoplemanagement.api.dto.v1.NewPessoaDTO;
@@ -29,10 +30,11 @@ import com.trinity.peoplemanagement.domain.repository.PessoaRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "Pessoas - v1", tags = "Pessoas - v1")
+@Api(value = "Pessoas", tags = "Pessoas")
 @RestController
 @RequestMapping("api/v1/pessoas")
 public class PessoaResource {
@@ -44,9 +46,12 @@ public class PessoaResource {
 	private com.trinity.peoplemanagement.domain.service.PessoaService pessoaService;
 
 	@ApiOperation(value = "Retorna uma lista de pessoas")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna a lista de pessoa"),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Retorna a lista de pessoa"),
 			@ApiResponse(code = 500, message = "Falha no servidor"), })
+	
 	@GetMapping(produces = "application/json")
+	@ResponseStatus(code = HttpStatus.OK)
 	public List<ResponsePessoaDTO> listar() {
 		List<Pessoa> pessoas = pessoaRepository.findAll();
 
@@ -58,11 +63,16 @@ public class PessoaResource {
 	}
 
 	@ApiOperation(value = "Retorna a pessoa do id especificado")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna a pessoa do id especificado"),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Retorna a pessoa do id especificado"),
 			@ApiResponse(code = 404, message = "Nenhum registro encontrado"),
 			@ApiResponse(code = 500, message = "Falha no servidor"), })
+	
 	@GetMapping(value = "/{pessoaId}", produces = "application/json")
-	public ResponseEntity<ResponsePessoaDTO> buscar(@PathVariable Long pessoaId) {
+	@ResponseStatus(code = HttpStatus.OK)
+	public ResponseEntity<ResponsePessoaDTO> buscar(
+			@ApiParam(value = "O id da pessoa que deseja realizar a busca")
+			@PathVariable Long pessoaId) {
 		Optional<Pessoa> pessoa = pessoaRepository.findById(pessoaId);
 
 		if (pessoa.isPresent()) {
@@ -78,7 +88,9 @@ public class PessoaResource {
 			@ApiResponse(code = 500, message = "Falha no servidor"), })
 
 	@PostMapping(produces = "application/json", consumes = "application/json")
-	public ResponseEntity<?> adicionar(@Valid @RequestBody NewPessoaDTO pessoaDTO) {
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public ResponseEntity<?> adicionar(
+			@Valid @ApiParam("Dados da pessoa que deseja cadastrar") @RequestBody NewPessoaDTO pessoaDTO) {
 		try {
 			Pessoa pessoa = pessoaService.salvar(pessoaDTO.toPessoa());
 			
@@ -91,12 +103,16 @@ public class PessoaResource {
 	}
 
 	@ApiOperation(value = "Atualiza os dados de uma pessoa")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Atualiza os dados de uma pessoa"),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Atualiza os dados de uma pessoa"),
 			@ApiResponse(code = 400, message = "Requisição inválida"),
 			@ApiResponse(code = 404, message = "Regristro não encontrado"),
 			@ApiResponse(code = 500, message = "Falha no servidor"), })
 	@PutMapping(value = "/{pessoaId}", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<?> atualizar(@PathVariable Long pessoaId, @RequestBody UpdatePessoaDTO pessoa) {
+	public ResponseEntity<?> atualizar(
+			@ApiParam(value = "Id da pessoa que deseja atualizar os dados") 
+			@PathVariable Long pessoaId, 
+			@ApiParam("Dados da pessoa que deseja atualizar") @RequestBody UpdatePessoaDTO pessoa) {
 		try {
 			Optional<Pessoa> pessoaOpt = pessoaRepository.findById(pessoaId);
 
@@ -119,11 +135,16 @@ public class PessoaResource {
 	}
 
 	@ApiOperation(value = "Remove os registro de uma pessoa")
-	@ApiResponses(value = { @ApiResponse(code = 204, message = "Remove os registro de uma pessoa"),
+	@ApiResponses(value = { 
+			@ApiResponse(code = 204, message = "Remove os registro de uma pessoa"),
 			@ApiResponse(code = 404, message = "Regristro não encontrado"),
 			@ApiResponse(code = 409, message = "Conflito"), @ApiResponse(code = 500, message = "Falha no servidor"), })
+	
 	@DeleteMapping(value = "/{pessoaId}", produces = "application/json")
-	public ResponseEntity<Pessoa> remover(@PathVariable Long pessoaId) {
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> remover(
+			@ApiParam(value = "ID da pessoa que deseja excluir")
+			@PathVariable Long pessoaId) {
 		try {
 			pessoaService.excluir(pessoaId);
 			return ResponseEntity.noContent().build();

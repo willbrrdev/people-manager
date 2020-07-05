@@ -3,6 +3,7 @@ package com.trinity.peoplemanagement.domain.model;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity(name = "pessoas")
+@ApiModel("Pessoa")
 public class Pessoa {
 
 	@ApiModelProperty(value = "Id da pessoa", example = "1")
@@ -54,5 +57,8 @@ public class Pessoa {
 	@ApiModelProperty(value = "Sexo da pessoa, Masculino, Feminino e Outros", example = "Masculino")
 	@Column
 	private String sexo;
+	
+	@Embedded
+	private Endereco endereco;
 
 }

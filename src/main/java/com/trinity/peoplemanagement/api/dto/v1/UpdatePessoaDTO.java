@@ -10,11 +10,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.trinity.peoplemanagement.domain.model.Pessoa;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@ApiModel("UpdatePessoaDTO")
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UpdatePessoaDTO {
