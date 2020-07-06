@@ -19,7 +19,7 @@ import com.trinity.peoplemanagement.domain.model.Pessoa;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class PessoaRepositoryTest {
+public class PessoaRepositoryIT {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
