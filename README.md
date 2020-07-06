@@ -12,8 +12,8 @@
 
 <p align="center">
   <a href="#floppy_disk-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#family_man_man_boy_boy-como-contribuir-e-executar-o-projeto">Como Contribuir e Executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#family_man_man_boy_boy-como-contribuir-ou-executar">Como Contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#blue_heart-contributors">Colaboradores</a>
 </p>
@@ -36,6 +36,10 @@ Este projeto foi desenvolvido usando as seguintes tecnologias:
   <li><a href="https://flywaydb.org/">Flyway</a></li>
   <li><a href="https://projectlombok.org/">Lombok</a></li>
 </ul>
+
+## :family_man_man_boy_boy: Como Contribuir e Executar o Projeto
+
+<p>Para contribuir e/ou instruções de como rodar a aplicação, <a href="CONTRIBUTING.md">veja nessas instruções</a>.</p>
 
 ## :computer: Projeto
 
@@ -338,10 +342,6 @@ Response
 
 __Remove Cadastro__
 > Codigo de retorno (204)
-
-## :family_man_man_boy_boy: Como Contribuir ou Executar
-
-<p>Para contribuir e/ou instruções de como rodar a aplicação, <a href="CONTRIBUTING.md">veja nessas instruções</a>.</p>
 
 ## :books: Documentation
 
