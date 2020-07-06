@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@CrossOrigin("*")
 @Api(value = "Pessoas", tags = "Pessoas")
 @RestController(value = "pessoaResourceV2")
 @RequestMapping("api/v2/pessoas")
@@ -113,6 +115,12 @@ public class PessoaResource {
 
 			if (pessoaOpt.isPresent()) {
 				Pessoa pessoaAtual = pessoaOpt.get();
+				
+				if (pessoa.getEndereco() != null) {
+					String cepSemMascara = pessoa.getEndereco().getCep().replaceAll("[-]", "");
+					pessoa.getEndereco().setCep(cepSemMascara);
+				}
+				
 				BeanUtils.copyProperties(pessoa, pessoaAtual, "id", "cpf");
 
 				pessoaAtual = pessoaRepository.save(pessoaAtual);

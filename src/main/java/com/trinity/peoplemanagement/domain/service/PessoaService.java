@@ -21,13 +21,18 @@ public class PessoaService {
 
 		try {
 			String cpfSemMascara = pessoa.getCpf().replaceAll("[.-]", "");
+			
+			if (pessoa.getEndereco() != null) {
+				String cepSemMascara = pessoa.getEndereco().getCep().replaceAll("[-]", "");
+				pessoa.getEndereco().setCep(cepSemMascara);
+			}
 
 			pessoa.setCpf(cpfSemMascara);
 			Pessoa pessoaSalva = pessoaRepository.save(pessoa);
 
 			return pessoaSalva;
 		} catch (DataIntegrityViolationException e) {
-			throw new CPFEmUsoException(String.format("O CPF %s já está cadastrado", pessoa.getCpf()));
+			throw new CPFEmUsoException("Database error " + e.getMessage());
 		}
 
 	}
