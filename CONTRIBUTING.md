@@ -1,4 +1,4 @@
-# Contribuição e Exwecução do Projeto
+# Contribuição e Execução do Projeto
 
 ### Configurando seu ambiente e executando projeto
 
